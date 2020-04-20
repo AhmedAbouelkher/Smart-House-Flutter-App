@@ -7,8 +7,9 @@ This amazing App UI is built on the amazing design of [Outcrowd](https://dribbbl
 - Live Demo: [From Here](https://youtu.be/9VGtARd85nA "App Demo")  
 
 ## Design
-![orignal design]("screenshots/smart-home3(compressed).gif")
+![orignal design]("https://github.com/AhmedAbouelkher/Smart-House-Flutter-App/blob/master/screenshots/smart-home3(compressed).gif")
 
 ## Implementation
+![]("https://github.com/AhmedAbouelkher/Smart-House-Flutter-App/blob/master/screenshots/Smart%20Home%20demo.gif")
 
 <img src="screenshots/screenshot_1.png" width="300"> <img src="screenshots/screenshot_2.png" width="300">  <img src="screenshots/screenshot_3.png" width="300">
