@@ -11,15 +11,30 @@ dependencies:
 
   cupertino_icons: ^0.1.2
   after_layout:
-  response:
+  response: ^0.1.1
   provider:
   font_awesome_flutter:
   flutter_sequence_animation: ^3.0.1
   bezier_chart: ^1.0.16
+  swipe_gesture_recognizer: ^0.0.2
+  awesome_dialog: ^1.1.2
+  flutter_platform_widgets: ^0.51.0
+  shared_preferences: ^0.5.7+3
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon.jpg"
+
+flutter_native_splash:
+  image: assets/icon.jpg
+  color: "ffffff"
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.7.3"
+  flutter_native_splash: ^0.1.9
 
 
 flutter:

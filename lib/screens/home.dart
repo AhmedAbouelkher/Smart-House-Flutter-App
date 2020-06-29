@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:response/response.dart';
 import 'package:smart_house/screens/air_conditioner.dart';
 import 'package:smart_house/screens/history.dart';
 
@@ -15,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen>
   AnimationController _defController;
   Animation<double> _animation;
   Animation<double> _slidingAnimation;
+  final resp = ResponseUI.instance;
   Animation<double> _defAnimation;
   int _counter = 8;
   bool _lightOnScale = false;
@@ -93,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen>
             //Menu Icon
             Positioned(
               left: 5,
-              top: 20,
+              top: 15,
               child: AnimatedBuilder(
                 animation: _defAnimation,
                 builder: (BuildContext context, Widget child) {
@@ -106,17 +111,22 @@ class _HomeScreenState extends State<HomeScreen>
                     ),
                   );
                 },
-                child: Icon(
-                  Icons.menu,
-                  color: Colors.black,
-                  size: 30,
+                child: GestureDetector(
+                  onTap: () async {
+                    await _buildAlartDialog(context);
+                  },
+                  child: Icon(
+                    Icons.menu,
+                    color: Colors.black,
+                    size: 30,
+                  ),
                 ),
               ),
             ),
             //Welcomming Text
             Positioned(
               left: 40,
-              top: 80,
+              top: 55,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -173,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen>
             ),
             //main screen widgets
             Positioned(
-              top: 190,
+              bottom: -90,
               left: -120,
               child: AnimatedBuilder(
                 animation: _defAnimation,
@@ -240,43 +250,48 @@ class _HomeScreenState extends State<HomeScreen>
                           Spacer(),
                           Transform.translate(
                             offset: Offset((1 - _defAnimation.value) * 10, 0),
-                            child: Container(
-                              width: 120,
-                              height: 170,
-                              decoration: BoxDecoration(
-                                color: Color(0xff0ECE96),
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: Offset(5, 5),
-                                    color: Colors.black.withOpacity(0.08),
-                                    spreadRadius: 2,
-                                    blurRadius: 20,
-                                  )
-                                ],
-                              ),
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      "Currently",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 17,
-                                      ),
-                                    ),
-                                    SizedBox(height: 15),
-                                    Text(
-                                      " 7°",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 65,
-                                      ),
-                                    ),
+                            child: GestureDetector(
+                              onTap: () async {
+                                await _buildAlartDialog(context);
+                              },
+                              child: Container(
+                                width: 120,
+                                height: 170,
+                                decoration: BoxDecoration(
+                                  color: Color(0xff0ECE96),
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: Offset(5, 5),
+                                      color: Colors.black.withOpacity(0.08),
+                                      spreadRadius: 2,
+                                      blurRadius: 20,
+                                    )
                                   ],
+                                ),
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        "Currently",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 17,
+                                        ),
+                                      ),
+                                      SizedBox(height: 15),
+                                      Text(
+                                        " 7°",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 65,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -390,105 +405,111 @@ class _HomeScreenState extends State<HomeScreen>
                     },
                   );
                 },
-                child: Container(
-                  color: Colors.grey.withOpacity(0.1),
-                  height: height,
-                  width: 140,
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(height: 30),
-                      Container(
-                        height: 55,
-                        width: 55,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Image.asset(
-                            'assets/avater.jpg',
-                            fit: BoxFit.fitHeight,
+                child: GestureDetector(
+                  onTap: () async {
+                    await _buildAlartDialog(context);
+                  },
+                  child: Container(
+                    color: Colors.grey.withOpacity(0.1),
+                    height: height,
+                    width: 140,
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(height: 30),
+                        Container(
+                          height: 65,
+                          width: 65,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: Image.asset(
+                              'assets/avater.jpg',
+                              fit: BoxFit.fitHeight,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 100),
-                      SizedBox(
-                        height: 350,
-                        child: Opacity(
-                          opacity: 0.7,
+                        SizedBox(height: resp.setHeight(50)),
+                        SizedBox(
+                          height: 300,
+                          child: Opacity(
+                            opacity: 0.7,
+                            child: Column(
+                              children: <Widget>[
+                                Expanded(
+                                    child: FaIcon(FontAwesomeIcons.utensils)),
+                                Expanded(
+                                    child: FaIcon(FontAwesomeIcons.couch,
+                                        color: Colors.orange)),
+                                Expanded(child: FaIcon(FontAwesomeIcons.bed)),
+                                Expanded(
+                                    child: FaIcon(FontAwesomeIcons.plusCircle)),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: resp.setHeight(0)),
+                        SizedBox(
+                          height: 150,
                           child: Column(
                             children: <Widget>[
-                              Expanded(
-                                  child: FaIcon(FontAwesomeIcons.utensils)),
-                              Expanded(
-                                  child: FaIcon(FontAwesomeIcons.couch,
-                                      color: Colors.orange)),
-                              Expanded(child: FaIcon(FontAwesomeIcons.bed)),
-                              Expanded(
-                                  child: FaIcon(FontAwesomeIcons.plusCircle)),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      SizedBox(
-                        height: 200,
-                        child: Column(
-                          children: <Widget>[
-                            GestureDetector(
-                              onTap: () => _moveToHistory(),
-                              child: Transform.translate(
-                                offset:
-                                    Offset((1 - _defAnimation.value) * 30, 0),
-                                child: RotatedBox(
-                                  quarterTurns: 1,
-                                  child: Text(
-                                    "Histoy",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 18,
-                                      letterSpacing: 1.01,
+                              GestureDetector(
+                                onTap: () => _moveToHistory(),
+                                child: Transform.translate(
+                                  offset:
+                                      Offset((1 - _defAnimation.value) * 30, 0),
+                                  child: RotatedBox(
+                                    quarterTurns: 1,
+                                    child: Text(
+                                      "Histoy",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 18,
+                                        letterSpacing: 1.01,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(height: 30),
-                            GestureDetector(
-                              onTap: () {
-                                _moveToControl();
-                              },
-                              child: Transform.translate(
-                                offset:
-                                    Offset((1 - _defAnimation.value) * 20, 0),
-                                child: RotatedBox(
-                                  quarterTurns: 1,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      SizedBox(height: 15),
-                                      Text(
-                                        "Control",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: 18,
-                                          letterSpacing: 1.01,
+                              SizedBox(height: resp.setHeight(20)),
+                              GestureDetector(
+                                onTap: () {
+                                  _moveToControl();
+                                },
+                                child: Transform.translate(
+                                  offset:
+                                      Offset((1 - _defAnimation.value) * 20, 0),
+                                  child: RotatedBox(
+                                    quarterTurns: 1,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        SizedBox(height: 15),
+                                        Text(
+                                          "Control",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 18,
+                                            letterSpacing: 1.01,
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      CircleAvatar(
-                                        backgroundColor: Colors.orange,
-                                        radius: 2.5,
-                                      )
-                                    ],
+                                        SizedBox(height: 10),
+                                        CircleAvatar(
+                                          backgroundColor: Colors.orange,
+                                          radius: 2.5,
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -514,6 +535,31 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  FutureOr<bool> _buildAlartDialog(BuildContext context) async {
+    return showPlatformDialog<bool>(
+      context: context,
+      builder: (_) => PlatformAlertDialog(
+        title: Text(
+          'Info',
+          style: TextStyle(
+            color: Colors.blue,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Padding(
+          padding: EdgeInsets.only(top: 10),
+          child: Text("This feature will be implemented soon, stay tuned."),
+        ),
+        actions: <Widget>[
+          PlatformDialogAction(
+            child: PlatformText('OK'),
+            onPressed: () => Navigator.of(context).pop(true),
+          ),
+        ],
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:bezier_chart/bezier_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
+import 'package:response/response.dart';
 import 'package:smart_house/screens/home.dart';
 
 class History extends StatefulWidget {
@@ -12,6 +13,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
   AnimationController _controller;
   SequenceAnimation sequenceAnimation;
   Duration _fullDuration;
+  final resp = ResponseUI.instance;
 
   @override
   void initState() {
@@ -88,7 +90,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
       body: Stack(
         children: <Widget>[
           Positioned(
-            top: 50,
+            top: resp.setHeight(25),
             left: 23,
             child: AnimatedBuilder(
               animation: _controller,
@@ -110,7 +112,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
             ),
           ),
           Positioned(
-            top: 120,
+            top: resp.setHeight(90),
             left: 40,
             child: AnimatedBuilder(
               animation: _controller,
@@ -148,7 +150,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
             ),
           ),
           Positioned(
-            top: 200,
+            top: resp.setHeight(170),
             right: 30,
             child: AnimatedBuilder(
               animation: _controller,
@@ -163,8 +165,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   ),
                 );
               },
-              child: SizedBox(
-                width: width - 75,
+              child: Expanded(
                 child: Row(
                   children: <Widget>[
                     Text(
@@ -211,7 +212,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                   child: Opacity(
                     opacity: animationValue,
                     child: Container(
-                      height: 50 + 200 * animationValueY,
+                      height: 50 + resp.setHeight(150) * animationValueY,
                       width: width - 50,
                       padding: EdgeInsets.all(30),
                       decoration: BoxDecoration(
@@ -243,7 +244,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                 );
               },
               child: Container(
-                height: 250,
+                height: resp.setHeight(190),
                 width: width - 50,
                 color: Colors.transparent,
                 padding: EdgeInsets.all(30),
@@ -257,7 +258,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         fontSize: 18,
                       ),
                     ),
-                    SizedBox(height: 25),
+                    SizedBox(height: resp.setHeight(20)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -288,7 +289,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         ),
                       ],
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(height: resp.setHeight(10)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -326,10 +327,10 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
           ),
           Positioned(
             right: 0,
-            top: 270,
+            top: resp.setHeight(195),
             child: Container(
               height: 160,
-              width: 220,
+              width: 270,
               child: Padding(
                 padding: EdgeInsets.only(right: 30),
                 child: Column(
@@ -399,7 +400,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
             ),
           ),
           Positioned(
-            top: width / 2 + 100,
+            top: width / 2 + resp.setHeight(50),
             left: 0,
             child: Container(
               height: 200,

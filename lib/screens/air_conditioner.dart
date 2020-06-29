@@ -75,6 +75,9 @@ class _AirConditionerState extends State<AirConditioner>
   @override
   void dispose() {
     super.dispose();
+    if (!_controller.isCompleted) {
+      _controller.stop();
+    }
     _controller.dispose();
   }
 
@@ -428,9 +431,7 @@ class _AirConditionerState extends State<AirConditioner>
             left: (width / 2) - 48,
             child: GestureDetector(
               onLongPress: () {
-                setState(() {
-                  isDeviceOff = !isDeviceOff;
-                });
+                setState(() => isDeviceOff = !isDeviceOff);
               },
               child: Opacity(
                 opacity: _animation.value,
@@ -438,19 +439,22 @@ class _AirConditionerState extends State<AirConditioner>
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(17),
-                        border: Border.all(
-                            color: Colors.white.withOpacity(0.5), width: 1),
-                      ),
-                      child: Center(
-                        child: FaIcon(
-                          FontAwesomeIcons.powerOff,
-                          color: isDeviceOff ? Colors.red : Colors.greenAccent,
-                          size: 18,
+                    Center(
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(17),
+                          border: Border.all(
+                              color: Colors.white.withOpacity(0.5), width: 1),
+                        ),
+                        child: Center(
+                          child: FaIcon(
+                            FontAwesomeIcons.powerOff,
+                            color:
+                                isDeviceOff ? Colors.red : Colors.greenAccent,
+                            size: 18,
+                          ),
                         ),
                       ),
                     ),
