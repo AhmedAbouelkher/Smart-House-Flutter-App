@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:response/response.dart';
+import 'package:smart_house/Widgets/Alert.dart';
 import 'package:smart_house/screens/air_conditioner.dart';
 import 'package:smart_house/screens/history.dart';
 
@@ -81,10 +82,18 @@ class _HomeScreenState extends State<HomeScreen>
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: PreferredSize(
+        child: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          brightness: Brightness.light,
+        ),
+        preferredSize: Size.fromHeight(0),
+      ),
       body: SafeArea(
+        top: false,
         child: Stack(
           children: <Widget>[
-            //home background
             Positioned(
               top: 0,
               right: 0,
@@ -111,10 +120,7 @@ class _HomeScreenState extends State<HomeScreen>
                     ),
                   );
                 },
-                child: GestureDetector(
-                  onTap: () async {
-                    await _buildAlartDialog(context);
-                  },
+                child: InfoAlert(
                   child: Icon(
                     Icons.menu,
                     color: Colors.black,
@@ -183,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen>
             ),
             //main screen widgets
             Positioned(
-              bottom: -90,
+              bottom: -(height * 0.1),
               left: -120,
               child: AnimatedBuilder(
                 animation: _defAnimation,
@@ -199,8 +205,8 @@ class _HomeScreenState extends State<HomeScreen>
                   );
                 },
                 child: Container(
-                  height: 600,
-                  width: 240 * 1.4,
+                  height: height * 0.8,
+                  width: width * 0.9,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
@@ -250,10 +256,7 @@ class _HomeScreenState extends State<HomeScreen>
                           Spacer(),
                           Transform.translate(
                             offset: Offset((1 - _defAnimation.value) * 10, 0),
-                            child: GestureDetector(
-                              onTap: () async {
-                                await _buildAlartDialog(context);
-                              },
+                            child: InfoAlert(
                               child: Container(
                                 width: 120,
                                 height: 170,
@@ -405,33 +408,30 @@ class _HomeScreenState extends State<HomeScreen>
                     },
                   );
                 },
-                child: GestureDetector(
-                  onTap: () async {
-                    await _buildAlartDialog(context);
-                  },
-                  child: Container(
-                    color: Colors.grey.withOpacity(0.1),
-                    height: height,
-                    width: 140,
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(height: 30),
-                        Container(
-                          height: 65,
-                          width: 65,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: Image.asset(
-                              'assets/avater.jpg',
-                              fit: BoxFit.fitHeight,
-                            ),
+                child: Container(
+                  color: Colors.grey.withOpacity(0.1),
+                  height: height,
+                  width: 140,
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: 30),
+                      Container(
+                        height: 65,
+                        width: 65,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Image.asset(
+                            'assets/avater.jpg',
+                            fit: BoxFit.fitHeight,
                           ),
                         ),
-                        SizedBox(height: resp.setHeight(50)),
-                        SizedBox(
+                      ),
+                      SizedBox(height: resp.setHeight(50)),
+                      InfoAlert(
+                        child: SizedBox(
                           height: 300,
                           child: Opacity(
                             opacity: 0.7,
@@ -449,67 +449,75 @@ class _HomeScreenState extends State<HomeScreen>
                             ),
                           ),
                         ),
-                        SizedBox(height: resp.setHeight(0)),
-                        SizedBox(
-                          height: 150,
-                          child: Column(
-                            children: <Widget>[
-                              GestureDetector(
-                                onTap: () => _moveToHistory(),
-                                child: Transform.translate(
-                                  offset:
-                                      Offset((1 - _defAnimation.value) * 30, 0),
-                                  child: RotatedBox(
-                                    quarterTurns: 1,
-                                    child: Text(
-                                      "Histoy",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 18,
-                                        letterSpacing: 1.01,
+                      ),
+                      Container(
+                        constraints: BoxConstraints(
+                          maxHeight: 200,
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            Expanded(
+                              child: Center(
+                                child: GestureDetector(
+                                  onTap: () => _moveToHistory(),
+                                  child: Transform.translate(
+                                    offset: Offset(
+                                        (1 - _defAnimation.value) * 30, 0),
+                                    child: RotatedBox(
+                                      quarterTurns: 1,
+                                      child: Text(
+                                        "Histoy",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 18,
+                                          letterSpacing: 1.01,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                              SizedBox(height: resp.setHeight(20)),
-                              GestureDetector(
-                                onTap: () {
-                                  _moveToControl();
-                                },
-                                child: Transform.translate(
-                                  offset:
-                                      Offset((1 - _defAnimation.value) * 20, 0),
-                                  child: RotatedBox(
-                                    quarterTurns: 1,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        SizedBox(height: 15),
-                                        Text(
-                                          "Control",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w300,
-                                            fontSize: 18,
-                                            letterSpacing: 1.01,
+                            ),
+                            Expanded(
+                              child: Center(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    _moveToControl();
+                                  },
+                                  child: Transform.translate(
+                                    offset: Offset(
+                                        (1 - _defAnimation.value) * 20, 0),
+                                    child: RotatedBox(
+                                      quarterTurns: 1,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          SizedBox(height: 15),
+                                          Text(
+                                            "Control",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w300,
+                                              fontSize: 18,
+                                              letterSpacing: 1.01,
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(height: 10),
-                                        CircleAvatar(
-                                          backgroundColor: Colors.orange,
-                                          radius: 2.5,
-                                        )
-                                      ],
+                                          SizedBox(height: 10),
+                                          CircleAvatar(
+                                            backgroundColor: Colors.orange,
+                                            radius: 2.5,
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ),
@@ -535,31 +543,6 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  FutureOr<bool> _buildAlartDialog(BuildContext context) async {
-    return showPlatformDialog<bool>(
-      context: context,
-      builder: (_) => PlatformAlertDialog(
-        title: Text(
-          'Info',
-          style: TextStyle(
-            color: Colors.blue,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        content: Padding(
-          padding: EdgeInsets.only(top: 10),
-          child: Text("This feature will be implemented soon, stay tuned."),
-        ),
-        actions: <Widget>[
-          PlatformDialogAction(
-            child: PlatformText('OK'),
-            onPressed: () => Navigator.of(context).pop(true),
-          ),
-        ],
       ),
     );
   }

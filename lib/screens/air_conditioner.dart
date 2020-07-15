@@ -156,6 +156,13 @@ class _AirConditionerState extends State<AirConditioner>
     // return AnimationTest();
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: PreferredSize(
+          child: AppBar(
+            backgroundColor: Color(0xff343950),
+            elevation: 0,
+            brightness: Brightness.dark,
+          ),
+          preferredSize: Size.fromHeight(0)),
       body: Stack(
         children: <Widget>[
           //background
@@ -185,7 +192,7 @@ class _AirConditionerState extends State<AirConditioner>
           ),
           //main text header
           Positioned(
-            top: 120,
+            top: 100,
             left: 30,
             child: RichText(
               text: TextSpan(
@@ -209,24 +216,21 @@ class _AirConditionerState extends State<AirConditioner>
             ),
           ),
           //ciculer indicator
-          Positioned(
-            top: 350,
-            left: 0,
-            right: 0,
+          Center(
             child: Opacity(
               opacity: _showMeterAnimtion.value,
               child: Stack(
                 alignment: Alignment.center,
                 children: _generateCiculerIndicator(
-                    changePercentage: isCoolingOn,
-                    changeColor: changeTempColor),
+                  changePercentage: isCoolingOn,
+                  changeColor: changeTempColor,
+                ),
               ),
             ),
           ),
           //temp. indicator text
-          Positioned(
-            top: height / 2 - 90,
-            left: 150,
+          Align(
+            alignment: Alignment(0, -0.15),
             child: Text(
               (26 - _switchTextAnimation.value * (26 - 12)).toStringAsFixed(0) +
                   "°",
@@ -239,7 +243,7 @@ class _AirConditionerState extends State<AirConditioner>
           ),
           //back icon
           Positioned(
-            top: 50,
+            top: 20,
             left: 10,
             child: AnimatedBuilder(
               animation: _arrowSecondaryAnimation,
@@ -427,7 +431,7 @@ class _AirConditionerState extends State<AirConditioner>
           ),
           //On/Off Switch
           Positioned(
-            bottom: 15,
+            bottom: 30,
             left: (width / 2) - 48,
             child: GestureDetector(
               onLongPress: () {
